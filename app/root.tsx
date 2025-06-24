@@ -1,3 +1,4 @@
+import Navagation from "~/common/components/navagation";
 import {
   isRouteErrorResponse,
   Links,
@@ -42,7 +43,15 @@ export function Layout({ children }: { children: React.ReactNode }) {
 }
 
 export default function App() {
-  return <Outlet />;
+  return (
+    <div className="py-28">
+      <Navagation isLoggedIn={false} 
+      hasNotifications={false}
+      hasMessages={false}
+      />
+      <Outlet />
+    </div>
+  );
 }
 
 export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
