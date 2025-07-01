@@ -17,7 +17,11 @@ export default [
         ]),
     ]),
 
+    ...prefix("/scenarios",[
+        route("/main", "features/scenarios/main.tsx"),
+        route("/ready", "features/scenarios/scenarioready.tsx"),
+        route("/simulation", "features/scenarios/scenarios.tsx"),
+    ]),
     index("common/pages/home-page.tsx"),
-    route("/scenarios", "features/scenarios/scenarios.tsx"),
     route("/personal", "features/personal/personal-dashboard.tsx"),
 ] satisfies RouteConfig;

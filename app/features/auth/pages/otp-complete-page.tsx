@@ -32,7 +32,7 @@ export default function OtpPage() {
             placeholder="i.e 1234"
           />
           <Button className="w-full" type="submit">
-            Send OTP
+            Log in
           </Button>
         </Form>
       </div>
