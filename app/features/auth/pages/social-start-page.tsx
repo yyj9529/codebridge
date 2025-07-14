@@ -1,6 +1,15 @@
 import { Button } from '~/common/components/ui/button';
+import { getScenarios } from '../quries';
+import type { Route } from '.react-router/types/app/features/scenarios/+types/scenarios';
 
-export default function SocialStartPage() {
+export const loader = async()=>{
+    const allscenarios = await getScenarios();
+    return {allscenarios};
+}
+
+export default function SocialStartPage({loaderData}:Route.ComponentProps) {
+  
+  console.log(loaderData);
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
       <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
