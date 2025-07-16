@@ -20,7 +20,8 @@ export default [
     ...prefix("/scenarios",[
         route("/main", "features/scenarios/main.tsx"),
         route("/ready", "features/scenarios/scenarioready.tsx"),
-        route("/simulation", "features/scenarios/scenarios.tsx"),
+        route("/simulation","features/scenarios/scenarios.tsx"),
+        route("/generate/","features/scenarios/generate-scenarios-page.tsx"),
     ]),
     index("common/pages/home-page.tsx"),
     route("/personal", "features/personal/personal-dashboard.tsx"),
