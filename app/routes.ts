@@ -25,4 +25,5 @@ export default [
     ]),
     index("common/pages/home-page.tsx"),
     route("/personal", "features/personal/personal-dashboard.tsx"),
+    route("/welcome/", "features/personal/welcome-page.tsx"),
 ] satisfies RouteConfig;

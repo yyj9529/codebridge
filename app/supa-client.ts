@@ -1,11 +1,50 @@
-import { createBrowserClient } from "@supabase/ssr";
-import {createClient} from "@supabase/supabase-js";
-import type { Database } from "~/../database.types";    
+import { createBrowserClient, createServerClient, type CookieOptions } from "@supabase/ssr";
+import type { Database  as SupabaseDatabase} from "~/../database.types";    
+import type { MergeDeep, SetNonNullable , SetFieldType } from "type-fest";
+import * as cookie from "cookie";
 
-export const client = createClient<Database>(
+type Database = MergeDeep<SupabaseDatabase, {
+    public: {
+        Views: {
+            user_available_tasks: {
+                Row: SetFieldType<SetNonNullable<SupabaseDatabase["public"]["Views"]["user_available_tasks"]["Row"], "task_id" | "title" | "description" | "scenario_name" | "role_name" | "techstack_name">,"description","string"|null>;
+            }
+        }
+    }
+}>
+
+export const browserClient = createBrowserClient<Database>(
     process.env.SUPABASE_URL!,
     process.env.SUPABASE_ANON_KEY!
-)
+);
+
+export const makeSSRClient = (request: Request) => {
+  const cookies = cookie.parse(request.headers.get('Cookie') ?? '');
+  const headers = new Headers();
+
+  const client = createServerClient<Database>(
+    process.env.SUPABASE_URL!,
+    process.env.SUPABASE_ANON_KEY!,
+    {
+      cookies: {
+        get(name: string) {
+          return cookies[name];
+        },
+        set(name: string, value: string, options: CookieOptions) {
+          headers.append('Set-Cookie', cookie.serialize(name, value, options));
+        },
+        remove(name: string, options: CookieOptions) {
+          headers.append('Set-Cookie', cookie.serialize(name, '', options));
+        },
+      },
+    }
+  );
+
+  return {
+    client,
+    headers,
+  };
+};
 //클라이언트는 어떻게 로그인한 유저를 알수 있을까? 쿠키 
 //이 클라이언트는 자동으로 특정 쿠키를 찾고,쿠키를 사용하여 supabase와 통신해 누가 우리 애플리케이션을 사용하는지 알아냄
 //이 코드가 브라우저에서 실행되면 클라이언트는 자동으로 브라우저의 쿠키에 접근해 쿠키를 가져와 쿠키에서 토큰을 추출함

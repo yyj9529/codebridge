@@ -2,6 +2,8 @@ import { Button } from "~/common/components/ui/button";
 import { Form, Link } from "react-router";
 import InputPair from "~/common/components/input-pair";
 import AuthButtons from "../components/auth-buttons";
+import { useNavigation } from "react-router";
+
 
 export default function JoinPage() {
   return (

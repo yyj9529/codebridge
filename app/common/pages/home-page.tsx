@@ -1,6 +1,16 @@
-import type { MetaFunction } from 'react-router';
+import { type MetaFunction } from 'react-router';
 import { Button } from '../components/ui/button';
 import { ChevronRightIcon, UserIcon, CodeIcon, TrophyIcon } from 'lucide-react';
+import type { Route } from '../../../.react-router/types/app/common/pages/+types/home-page';
+import { makeSSRClient } from '~/supa-client';
+
+
+export const loader = async({request}:Route.LoaderArgs)=>{
+  const {client,headers} = makeSSRClient(request);
+  const {data,error} = await client.from("user_available_tasks").select("*");
+  
+  return null;
+}
 
 export const meta: MetaFunction = () => {
   return [
