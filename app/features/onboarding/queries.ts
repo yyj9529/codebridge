@@ -23,13 +23,13 @@ import { client } from "~/supa-client";
 // }
 
 export const getRoles = async()=>{
-   const {data, error} = await client.from("roles").select("role_id, roleName")
+   const {data, error} = await client.from("roles").select("role_id, name")
    if(error) throw error;
    return data;
 }
 
 export const getTechStacks = async()=>{
-    const {data, error} = await client.from("techstacks").select("techstack_id, techName, role_id")
+    const {data, error} = await client.from("techstacks").select("techstack_id, name, role_id")
     if(error) throw new Error(error.message);
     return data;
 }
